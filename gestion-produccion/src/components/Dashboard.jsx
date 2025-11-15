@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../App.css";
+// Quita completamente esta línea: import "./Dashboard.css";
 
-function Dashboard() {      //pantalla simulada del dashboard
+function Dashboard() {
   const navigate = useNavigate();
 
   return (

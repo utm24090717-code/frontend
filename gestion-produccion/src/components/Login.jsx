@@ -1,65 +1,72 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../App.css";
+import "./Login.css";
+import { useState } from "react";
 
 function Login() {
-  //pantalla de login
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // ... (todo el código que ya tienes está perfecto)
+  // SOLO cambia el handleSubmit para navegar al dashboard:
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Correo:", email, "Contraseña:", password);
-    navigate("/dashboard"); //para navegar al dashboard
-  }
+
+    if (!correo || !contraseña) {
+      setError("Todos los campos son obligatorios");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(correo)) {
+      setError("El correo no tiene un formato válido");
+      return;
+    }
+
+    console.log("Datos enviados:", { correo, contraseña });
+
+    // SIMULAR LOGIN EXITOSO - redirigir al dashboard
+    if (correo === "test@gmail.com" && contraseña === "123456") {
+      setError("");
+      window.location.href = "/dashboard"; // ← Esta línea redirige
+    } else {
+      setError("Credenciales incorrectas");
+    }
+  };
 
   return (
     <div className="login-container">
-      <div className="login-left">
-        <img src="/public/logo3nissan.png" alt="Logo" className="login-logo" />
+      <div className="login-card">
+        <h2 className="title">Iniciar sesión</h2>
+        <p className="subtitle">Bienvenido de nuevo</p>
 
-        <div className="card">
-          <h2 className="title">BIENVENIDO</h2>
-          <p className="subtitle">
-            ¿No tienes una cuenta?<a href="#"> Crear una cuenta</a>
-          </p>
+        {error && <p className="error-message">{error}</p>}
 
-          <form onSubmit={handleSubmit}>
-            <label>Correo electrónico</label>
-            <input
-              type="email"
-              placeholder="Ingresa tu direccion e-mail"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="input"
-            />
+        <form onSubmit={handleSubmit}>
+          <input
+            className="input"
+            type="email"
+            placeholder="Correo electrónico"
+            value={correo}
+            onChange={(e) => setCorreo(e.target.value)}
+          />
 
-            <label>Contraseña</label>
-            <input
-              type="password"
-              placeholder="Contraseña"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="input"
-            />
+          <input
+            className="input"
+            type="password"
+            placeholder="Contraseña"
+            value={contraseña}
+            onChange={(e) => setContraseña(e.target.value)}
+          />
 
-            <button type="submit" className="button">
-              Iniciar sesión
-            </button>
-          </form>
-
-          <div className="login-links">
-            <a href="#">¿Olvidaste tu contraseña?</a>
-          </div>
-        </div>
-      </div>
-
-      <div className="login-right">
-        <img src="/public/carro3.jpg" alt="imagen derecha" />
+          <button className="button">Entrar</button>
+        </form>
+        
+        {/* Agrega este texto para probar credenciales */}
+        <p style={{textAlign: 'center', fontSize: '12px', marginTop: '15px', color: '#666'}}>
+          Usa: test@gmail.com / 123456
+        </p>
       </div>
     </div>
   );
 }
 
 export default Login;
+
+
